@@ -1,0 +1,8 @@
+POST /settings HTTP/1.1
+Host:localhost:3000
+Content-Type: application/json
+Content-Length: 160
+{
+    "chat": true,
+    "username": "tonnytg@gmail.com"
+}
