@@ -52,5 +52,34 @@ io.on("connect", (socket) => {
             user_id,
             admin_id
         })
+
+        const allMessages = await messagesService.listByUser(user_id);
+
+        socket.emit("client_list_all_messages")
+
+        const allUsers = await connectionsService.findAllWithoutAdmin()
+        socket.emit("admin_list_all_users", allUsers);
+    })
+
+    socket.on("client_send_to_admin", async (params) => {
+        const { text, socket_admin_id } = params;
+
+        // Temporario
+        const admin_id = '0fc39ec6-344a-4145-808d-38c95533c42e';
+
+        const socket_id = socket.id;
+
+        const { user_id } = await connectionsService.findBySocketID(socket.id);
+
+        const message = await messagesService.create({
+            text,
+            user_id,
+            admin_id
+        });
+
+        io.to(socket_admin_id).emit("admin_receive_message", {
+            message,
+            socket_id,
+        })
     })
 });
