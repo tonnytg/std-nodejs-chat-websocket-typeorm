@@ -31,6 +31,28 @@ class UsersService {
         // Se existir, retornar user
         return user;
     }
+
+    async findByEmail(email: string) {
+
+        // Verificar se usuário exisitr
+        const userExists = await this.userRepository.findOne({
+            email
+        })
+
+        // Senão existir, salvar no DB
+        if (userExists) {
+            return userExists
+        }
+
+        const user = this.userRepository.create({
+            email
+        })
+
+        await this.userRepository.save(user);
+
+        // Se existir, retornar user
+        return user;
+    }
 }
 
 export { UsersService }

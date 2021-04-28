@@ -3,6 +3,7 @@ let emailUser = null;
 let socket = null;
 
 document.querySelector("#start_chat").addEventListener("click", (event) => {
+  console.log("Cliente clicou no botão")
   socket = io();
 
   const chat_help = document.getElementById("chat_help");
